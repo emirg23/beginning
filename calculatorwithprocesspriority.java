@@ -1,85 +1,96 @@
 import java.util.Scanner;
-import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class calculatorwithprocesspriority{
-public static void main(String[] Args){
 
-    Scanner input = new Scanner(System.in);
-    
-    System.out.println("CALCULATOR WITH THE PROCESS PRIORITY");
-    
-    System.out.println("PLEASE INPUT THE OPERATION:");
-    
-    List<String> operationinput = new ArrayList<>(Arrays.asList(input.nextLine().split(" ")));
 
-    int operationinputsize = operationinput.size(); 
+public class calculatorwithprocesspriority {
 
-    
+	public static void main(String[] args) {
+		
+		Scanner input = new Scanner(System.in);
+		
+		System.out.println("please input the process you want to calculate ( if you gonna use paranthesis, use space ).");
+		
+		List<String> process = new ArrayList<>(Arrays.asList(input.nextLine().split(" ")));
 
-    for(int i = 1; i < (operationinputsize); i = i + 1){
+		
+		for(int i = 0; i< process.size();i++)
+			if(process.get(i).equals("(")) {
+				process.remove(i);
+				for(int k = 0; k<process.size(); k++) {
+					if(process.get(k).equals(")")) {
+						process.remove(k);
+						for(int c = i+1; c<k; c++) {
+							if(process.get(c).equals("*")) {
+								process.set(c-1, String.valueOf(Integer.valueOf(process.get(c-1))*Integer.valueOf(process.get(c+1))));
+								process.remove(c);
+								process.remove(c);
+								break;
+								}
+							
+							if(process.get(c).equals("/")) {
+								process.set(c-1, String.valueOf(Integer.valueOf(process.get(c-1))/Integer.valueOf(process.get(c+1))));
+								process.remove(c);
+								process.remove(c);
+								break;
+								}
+						}
+						for(int c = i+1; c<k; c++) {
+							if(process.get(c).equals("+")) {
+								process.set(c-1, String.valueOf(Integer.valueOf(process.get(c-1))+Integer.valueOf(process.get(c+1))));
+								process.remove(c);
+								process.remove(c);
+								break;
+								}
+							if(process.get(c).equals("-")) {
+								process.set(c-1, String.valueOf(Integer.valueOf(process.get(c-1))-Integer.valueOf(process.get(c+1))));
+								process.remove(c);
+								process.remove(c);
+								break;
+								}
 
-        
-        
-        if(operationinput.get(i).equals("*")){
-            
-            int equalsto = Integer.valueOf(operationinput.get(i-1)) * Integer.valueOf(operationinput.get(i+1));
+						}
+					}
+					
+				}
+					
+			}
+	
+		for(int c = 0; c<process.size(); c++) {
+			if(process.get(c).equals("*")) {
+				process.set(c-1, String.valueOf(Integer.valueOf(process.get(c-1))*Integer.valueOf(process.get(c+1))));
+				process.remove(c);
+				process.remove(c);
+				break;
+				}
+			
+			if(process.get(c).equals("/")) {
+				process.set(c-1, String.valueOf(Integer.valueOf(process.get(c-1))/Integer.valueOf(process.get(c+1))));
+				process.remove(c);
+				process.remove(c);
+				break;
+				}
+		}
+		for(int c = 0; c<process.size(); c++) {
+			if(process.get(c).equals("+")) {
+				process.set(c-1, String.valueOf(Integer.valueOf(process.get(c-1))+Integer.valueOf(process.get(c+1))));
+				process.remove(c);
+				process.remove(c);
+				break;
+				}
+			if(process.get(c).equals("-")) {
+				process.set(c-1, String.valueOf(Integer.valueOf(process.get(c-1))-Integer.valueOf(process.get(c+1))));
+				process.remove(c);
+				process.remove(c);
+				break;
+				}
 
-            operationinput.set(i-1 , String.valueOf(equalsto));
+		}
+		
+		System.out.println(process);
+	}
+	}
 
-            operationinput.remove(i);
 
-            operationinput.remove(i);
-
-            i--;
-
-            
-            
-        }
-        
-        if(operationinput.get(i).equals("/")){
-            
-            int equalsto = Integer.valueOf(operationinput.get(i-1)) / Integer.valueOf(operationinput.get(i+1));
-
-            operationinput.set(i-1 , String.valueOf(equalsto));
-            
-            operationinput.remove(i);
-
-            operationinput.remove(i);
-
-            i--;
-
-            
-        }
-        
-        operationinputsize = operationinput.size();
-    }
-
-    for(int z = 1; z < operationinputsize; z++){
-        
-        if(operationinput.get(z).equals("+")){
-            int equalsto = Integer.valueOf(operationinput.get(z-1)) + Integer.valueOf(operationinput.get(z+1));
-            operationinput.set(z-1 , String.valueOf(equalsto));
-            operationinput.remove(z);
-            operationinput.remove(z);
-
-            z--;
-        }
-        
-        if(operationinput.get(z).equals("-")){
-            int equalsto = Integer.valueOf(operationinput.get(z-1)) - Integer.valueOf(operationinput.get(z+1));
-            operationinput.set(z-1 , String.valueOf(equalsto));
-            operationinput.remove(z);
-            operationinput.remove(z);
-
-            z--;
-
-        }
-        operationinputsize = operationinput.size();
-    }
-    int theanswer = Integer.valueOf(operationinput.get(0));
-
-    System.out.println("The answer = "+ theanswer);
-    }
-}
